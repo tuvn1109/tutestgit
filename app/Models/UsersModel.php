@@ -33,10 +33,10 @@ class UsersModel extends Model
 		return $query->get()->getRowArray();
 	}
 
-	public function getUserById($userID)
+	public function getUserByName($userName)
 	{
 		$query = $this->select($this->selectFields);
-		return $query->get($userID)->getRowArray();
+		return $query->getWhere(['username'=>$userName])->getRowArray();
 	}
 }
 

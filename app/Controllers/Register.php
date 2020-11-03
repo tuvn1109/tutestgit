@@ -19,14 +19,41 @@ class Register extends Controller
 		$name = $this->request->getPost('name');
 		$email = $this->request->getPost('email');
 		$password = $this->request->getPost('password');
-		$data = [
-			'username' => $username,
-			'name' => $name,
-			'email' => $email,
-			'password' => $password,
-		];
-		$a = $model->insert($data);
-		echo json_encode($a);
+
+		if ($username && $name && $email && $password) {
+			//$checkuser = false;
+			$checkuser = $model->getUserByName($username);
+			if ($checkuser) {
+				$return = [
+					'code' => 'username_already_exists',
+					'msg' => "username already exists",
+					'stt' => false,
+				];
+			} else {
+				$data = [
+					'username' => $username,
+					'name' => $name,
+					'email' => $email,
+					'password' => $password,
+				];
+				$a = $model->insert($data);
+
+				$return = [
+					'code' => 'register_successfully',
+					'msg' => "register successfully",
+					'stt' => true,
+				];
+			}
+
+		} else {
+			$return = [
+				'code' => 'missing_field_require',
+				'msg' => "Unable to register",
+				'stt' => false,
+			];
+
+		}
+		echo json_encode($return);
 	}
 
 
