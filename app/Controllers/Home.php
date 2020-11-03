@@ -4,7 +4,8 @@ class Home extends BaseController
 {
 	public function index()
 	{
-		return view('welcome_message');
+		$data['temp'] = 'homenew';
+		echo view('layout', $data);
 	}
 
 	//--------------------------------------------------------------------
